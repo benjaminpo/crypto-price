@@ -25,6 +25,7 @@ def fetch_cryptos_price():
 
     with open(CRYPTO_LIST_PATH, newline='', encoding=FILE_ENCODING) as file:
         crypto_list = csv.reader(file)
+        next(crypto_list)
         for crypto in crypto_list:
             stock = crypto[0].replace(".", "-")
             data = yf.download(stock, pass_years, today)
