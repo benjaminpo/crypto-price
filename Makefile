@@ -8,7 +8,7 @@ up:
 update-dataset:
 	python main.py
 	git add .
-	git commit -m "update dataset"
+	git commit -m "update datasets"
 	git push -f
 
 .PHONY: update
