@@ -6,7 +6,6 @@ import csv
 import logging
 import yfinance as yf
 
-
 CONFIG = configparser.ConfigParser()
 CONFIG.read('config/local.ini')
 CRYPTO_LIST_PATH = CONFIG.get('CRYPTO', 'LIST_PATH')
@@ -19,19 +18,23 @@ CRYPTO_PATH = CONFIG.get('CRYPTO', 'PATH')
 
 def fetch_cryptos_price():
     """Return nothing."""
-    today = datetime.today().strftime('%Y-%m-%d')
-    pass_years = datetime.now() - relativedelta(years=int(MAIN_GET_MAX_NUMBER_OF_YEAR_DATA))
-    pass_years = pass_years.strftime('%Y-%m-%d')
-
     with open(CRYPTO_LIST_PATH, newline='', encoding=FILE_ENCODING) as file:
         crypto_list = csv.reader(file)
         next(crypto_list)
         for crypto in crypto_list:
-            stock = crypto[0].replace(".", "-")
-            data = yf.download(stock, pass_years, today)
-            data.to_csv(CRYPTO_PATH + crypto[0] + ".csv")
-            print("Downloaded {} data".format(crypto[0]))
-            logging.info("Downloaded %s data", crypto[0])
+            print(fetch_crypto_price(crypto))
+
+
+def fetch_crypto_price(crypto):
+    today = datetime.today().strftime('%Y-%m-%d')
+    pass_years = datetime.now() - relativedelta(years=int(MAIN_GET_MAX_NUMBER_OF_YEAR_DATA))
+    pass_years = pass_years.strftime('%Y-%m-%d')
+
+    stock = crypto[0].replace(".", "-")
+    data = yf.download(stock, pass_years, today)
+    data.to_csv(CRYPTO_PATH + crypto[0] + ".csv")
+    logging.info("Downloaded %s data", crypto[0])
+    return "Downloaded {} data".format(crypto[0])
 
 
 def main():
