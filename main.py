@@ -22,10 +22,10 @@ def fetch_cryptos_price():
     pass_years = pass_years.strftime('%Y-%m-%d')
     ticker_list = []
     with open(CRYPTO_LIST_PATH, newline='', encoding=FILE_ENCODING) as file:
-        crypto_list = csv.reader(file)
-        next(crypto_list)
-        for crypto in crypto_list:
-            ticker_list.append(crypto[0].replace(".", "-"))
+        list = csv.reader(file)
+        next(list)
+        for ticker in list:
+            ticker_list.append(ticker[0].replace(".", "-"))
     data = yf.download(
         tickers = ticker_list,
         period = MAIN_GET_MAX_NUMBER_OF_YEAR_DATA + 'y',
