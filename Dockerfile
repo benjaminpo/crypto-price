@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM python:3.10.2-slim-buster
+FROM python:3.10.2-slim
 RUN apt-get -yqq update
 WORKDIR /app
 ADD . /app
