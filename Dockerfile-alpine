@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
-FROM python:3.10.2-slim-buster
-RUN apt-get -yqq update
+FROM python:3.10.2-alpine3.15
+RUN apk update
 WORKDIR /app
 ADD . /app
 COPY requirements.txt requirements.txt
