@@ -10,13 +10,12 @@ CONFIG = configparser.ConfigParser()
 CONFIG.read('config/local.ini')
 
 
-def fetch_cryptos_price():
+def fetch_cryptos_1d_price():
     """Return nothing."""
-
     CRYPTO_LIST_PATH = CONFIG.get('CRYPTO', 'LIST_PATH')
     FILE_ENCODING = CONFIG.get('FILE', 'ENCODING')
     MAIN_GET_MAX_NUMBER_OF_YEAR_DATA = CONFIG.get('MAIN', 'GET_MAX_NUMBER_OF_YEAR_DATA')
-    CRYPTO_PATH = CONFIG.get('CRYPTO', 'PATH')
+    CRYPTO_PATH_1D = CONFIG.get('CRYPTO', 'PATH_1D')
 
     pass_years = datetime.now() - relativedelta(years=int(MAIN_GET_MAX_NUMBER_OF_YEAR_DATA))
     pass_years = pass_years.strftime('%Y-%m-%d')
@@ -40,7 +39,7 @@ def fetch_cryptos_price():
     data = data.sort_index()
 
     for ticker in ticker_list:
-        data.loc[(ticker,), ].T.to_csv(CRYPTO_PATH + ticker + '.csv', sep=',', encoding='utf-8')
+        data.loc[(ticker,), ].T.to_csv(CRYPTO_PATH_1D + ticker + '-1d.csv', sep=',', encoding='utf-8')
 
 
 def main():
@@ -51,7 +50,7 @@ def main():
         datefmt='%Y-%m-%d %H:%M',
         handlers=[logging.FileHandler(LOGGING_MAIN_PATH, 'w', 'utf-8'), ]
     )
-    fetch_cryptos_price()
+    fetch_cryptos_1d_price()
 
 
 if __name__ == "__main__":
